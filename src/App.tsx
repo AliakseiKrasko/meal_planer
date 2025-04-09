@@ -1,34 +1,15 @@
 import './App.css'
+import {PlannerItem} from './PlannerItem.tsx';
 
-function App() {
+
+export const App = () => {
     return (
         <div className="app">
-            <div>
-                <h3>What to eat</h3>
-                <div>
-                    <input/>
-                    <button>+</button>
-                </div>
-                <ul>
-                    <li>
-                        <input type="checkbox" checked={true}/> <span>Apple</span>
-                    </li>
-                    <li>
-                        <input type="checkbox" checked={true}/> <span>Pear</span>
-                    </li>
-                    <li>
-                        <input type="checkbox" checked={false}/> <span>Plum</span>
-                    </li>
-                </ul>
-                <div>
-                    <button>Total calories</button>
-                    <button>Proteins</button>
-                    <button>Fats</button>
-                    <button>Carbs</button>
-                </div>
-            </div>
+            <PlannerItem title='What to eat' />
+            <PlannerItem title='What to eat' />
+            <PlannerItem title='What to eat' />
         </div>
     )
 }
 
-export default App
+
