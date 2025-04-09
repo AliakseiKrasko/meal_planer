@@ -4,26 +4,27 @@ function App() {
     return (
         <div className="app">
             <div>
-                <h3>What to learn</h3>
+                <h3>What to eat</h3>
                 <div>
                     <input/>
                     <button>+</button>
                 </div>
                 <ul>
                     <li>
-                        <input type="checkbox" checked={true}/> <span>HTML&CSS</span>
+                        <input type="checkbox" checked={true}/> <span>Apple</span>
                     </li>
                     <li>
-                        <input type="checkbox" checked={true}/> <span>JS</span>
+                        <input type="checkbox" checked={true}/> <span>Pear</span>
                     </li>
                     <li>
-                        <input type="checkbox" checked={false}/> <span>React</span>
+                        <input type="checkbox" checked={false}/> <span>Plum</span>
                     </li>
                 </ul>
                 <div>
-                    <button>All</button>
-                    <button>Active</button>
-                    <button>Completed</button>
+                    <button>Total calories</button>
+                    <button>Proteins</button>
+                    <button>Fats</button>
+                    <button>Carbs</button>
                 </div>
             </div>
         </div>
