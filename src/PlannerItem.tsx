@@ -11,7 +11,7 @@ export const PlannerItem = ( {title, menu, date }: Props) => {
 
 
     return (
-        <div>
+        <div className={s.card}>
             <h3>{title}</h3>
             <div>
                 <input/>
