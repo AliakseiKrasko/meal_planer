@@ -1,10 +1,12 @@
+import {Task} from './App.tsx';
 
-type PropsType = {
+type Props = {
     title: string
+    menu: Task[]
 }
 
-export const PlannerItem = (props: PropsType) => {
-    const {title} = props
+export const PlannerItem = ( {title }: Props) => {
+
 
     return (
         <div>
