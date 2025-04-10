@@ -5,7 +5,7 @@ type Props = {
     menu: Task[]
 }
 
-export const PlannerItem = ( {title }: Props) => {
+export const PlannerItem = ( {title, menu }: Props) => {
 
 
     return (
@@ -17,13 +17,14 @@ export const PlannerItem = ( {title }: Props) => {
             </div>
             <ul>
                 <li>
-                    <input type="checkbox" checked={true}/> <span>Apple</span>
+                    <input type="checkbox" checked={menu[0].isDone}/> <span>Apple</span>
+
                 </li>
                 <li>
-                    <input type="checkbox" checked={true}/> <span>Pear</span>
+                    <input type="checkbox" checked={menu[1].isDone}/> <span>Pear</span>
                 </li>
                 <li>
-                    <input type="checkbox" checked={false}/> <span>Plum</span>
+                    <input type="checkbox" checked={menu[2].isDone}/> <span>Plum</span>
                 </li>
             </ul>
             <div>
