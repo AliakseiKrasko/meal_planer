@@ -17,7 +17,9 @@ export const PlannerItem = ( {title, menu, date }: Props) => {
                 <input/>
                 <button>+</button>
             </div>
-            <ul className={s.list}>
+            {menu.length === 0 ? (
+            <p>Menu empty</p>) : (
+                <ul className={s.list}>
                 {menu.map(m => {
                     return (
                         <li key={m.id} >
@@ -27,6 +29,7 @@ export const PlannerItem = ( {title, menu, date }: Props) => {
                     )
                 })}
             </ul>
+                )}
             <div>
                 <button>Total calories</button>
                 <button>Proteins</button>
