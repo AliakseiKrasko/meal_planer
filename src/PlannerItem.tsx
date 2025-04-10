@@ -1,5 +1,6 @@
 import {Task} from './App.tsx';
 import s from './PlannerItem.module.css'
+import {Buttons} from './Buttons.tsx';
 
 type Props = {
     title: string
@@ -15,7 +16,7 @@ export const PlannerItem = ( {title, menu, date }: Props) => {
             <h3>{title}</h3>
             <div>
                 <input/>
-                <button>+</button>
+                <Buttons title='+' />
             </div>
             {menu.length === 0 ? (
             <p>Menu empty</p>) : (
@@ -31,10 +32,10 @@ export const PlannerItem = ( {title, menu, date }: Props) => {
             </ul>
                 )}
             <div>
-                <button>Total calories</button>
-                <button>Proteins</button>
-                <button>Fats</button>
-                <button>Carbs</button>
+                <Buttons title='Total calories' />
+                <Buttons title='Proteins' />
+                <Buttons title='Fats' />
+                <Buttons title='Carbs' />
             </div>
             <div>{date}</div>
         </div>
