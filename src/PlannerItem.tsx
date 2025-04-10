@@ -1,11 +1,13 @@
 import {Task} from './App.tsx';
+import s from './PlannerItem.module.css'
 
 type Props = {
     title: string
     menu: Task[]
+    date?: string
 }
 
-export const PlannerItem = ( {title, menu }: Props) => {
+export const PlannerItem = ( {title, menu, date }: Props) => {
 
 
     return (
@@ -15,17 +17,15 @@ export const PlannerItem = ( {title, menu }: Props) => {
                 <input/>
                 <button>+</button>
             </div>
-            <ul>
-                <li>
-                    <input type="checkbox" checked={menu[0].isDone}/> <span>Apple</span>
-
-                </li>
-                <li>
-                    <input type="checkbox" checked={menu[1].isDone}/> <span>Pear</span>
-                </li>
-                <li>
-                    <input type="checkbox" checked={menu[2].isDone}/> <span>Plum</span>
-                </li>
+            <ul className={s.list}>
+                {menu.map(m => {
+                    return (
+                        <li key={m.id} >
+                            <input type="checkbox" checked={m.isDone}/>
+                            <span>{m.title}</span>
+                        </li>
+                    )
+                })}
             </ul>
             <div>
                 <button>Total calories</button>
@@ -33,6 +33,7 @@ export const PlannerItem = ( {title, menu }: Props) => {
                 <button>Fats</button>
                 <button>Carbs</button>
             </div>
+            <div>{date}</div>
         </div>
     );
 };
