@@ -6,9 +6,10 @@ type Props = {
     title: string
     menu: Task[]
     date?: string
+    deleteTask: (taskId: string) => void
 }
 
-export const PlannerItem = ( {title, menu, date }: Props) => {
+export const PlannerItem = ( {title, menu, date, deleteTask }: Props) => {
 
 
     return (
@@ -26,6 +27,7 @@ export const PlannerItem = ( {title, menu, date }: Props) => {
                         <li key={m.id} >
                             <input type="checkbox" checked={m.isDone}/>
                             <span>{m.title}</span>
+                            <Buttons title={'х'} onClick={() => deleteTask(m.id)} />
                         </li>
                     )
                 })}
