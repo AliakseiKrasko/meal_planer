@@ -5,6 +5,7 @@ import {ChangeEvent, useState} from 'react';
 
 
 
+
 type Props = {
     title: string
     menu: Menu[]
@@ -19,15 +20,19 @@ export const PlannerItem = ({title, menu, date, deleteTask, toggleMenu, changeFi
 
     const [menuTitle, setMenuTitle] = useState('')
 
+
     const onChangeHadler = (taskId: string) => {
         toggleMenu(taskId); // Вызываем функцию из пропсов
     };
     const createMenuHandler = () => {
-        createMenu(menuTitle)
+        if (menuTitle.trim() === "") {
+            return
+        }
+        createMenu(menuTitle.trim())
         setMenuTitle('')
     }
     const changeMenuTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setMenuTitle(event.currentTarget.value)
+            setMenuTitle(event.currentTarget.value)
     }
     const createMenuOnEnterHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
