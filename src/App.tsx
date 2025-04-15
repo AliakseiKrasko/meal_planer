@@ -44,7 +44,14 @@ export const App = () => {
             el.id === id ? {...el, isDone: !el.isDone} : el))
     }
     const createTask = () => {
-        alert('Создание таски')
+        const newMenu = {
+            id: uuidv4(),
+            title: "new Menu",
+            isDone: false
+        }
+        const newMenuPlanner = [newMenu, ...menuPlanner]
+        setMenuPlanner(newMenuPlanner)
+
     }
 
 
