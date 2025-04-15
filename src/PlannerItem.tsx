@@ -8,13 +8,13 @@ type Props = {
     date?: string
     deleteTask: (taskId: string) => void
     changeFilter: (filter: FilterValue) => void
-    toggleTask: (taskId: string) => void
+    toggleMenu: (taskId: string) => void
 }
 
-export const PlannerItem = ( {title, menu, date, deleteTask, toggleTask }: Props) => {
+export const PlannerItem = ( {title, menu, date, deleteTask, toggleMenu }: Props) => {
 
     const onChangeHadler = (taskId: string) => {
-        toggleTask(taskId); // Вызываем функцию из пропсов
+        toggleMenu(taskId); // Вызываем функцию из пропсов
     };
 
     return (
@@ -38,11 +38,10 @@ export const PlannerItem = ( {title, menu, date, deleteTask, toggleTask }: Props
                 })}
             </ul>
                 )}
-            <div>
-                <Buttons title='Total calories' />
-                <Buttons title='Proteins' />
-                <Buttons title='Fats' />
-                <Buttons title='Carbs' />
+            <div className="filterButton">
+                <Buttons title='all' />
+                <Buttons title='active' className={s.filterButton} />
+                <Buttons title='completed' className={s.filterButton} />
             </div>
             <div>{date}</div>
         </div>

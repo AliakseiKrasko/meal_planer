@@ -13,3 +13,6 @@
 .list {
     list-style: none;
 }
+.filterButton {
+    margin-left: 3px;
+}

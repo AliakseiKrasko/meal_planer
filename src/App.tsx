@@ -32,7 +32,7 @@ export const App = () => {
         setMenuPlanner(prevMenu => prevMenu.filter(m => m.id !== taskId))
     }
 
-    const toggleTask = (id: string) => {
+    const toggleMenu = (id: string) => {
         setMenuPlanner(prevMenu => prevMenu.map(el =>
             el.id === id ? {...el, isDone: !el.isDone} : el))
     }
@@ -45,7 +45,7 @@ export const App = () => {
                          date={data}
                          deleteTask={deleteTask}
                          changeFilter={changeFilter}
-                         toggleTask={toggleTask}
+                         toggleMenu={toggleMenu}
             />
 
         </div>
