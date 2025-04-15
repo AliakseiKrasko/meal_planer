@@ -43,6 +43,9 @@ export const App = () => {
         setMenuPlanner(prevMenu => prevMenu.map(el =>
             el.id === id ? {...el, isDone: !el.isDone} : el))
     }
+    const createTask = () => {
+        alert('Создание таски')
+    }
 
 
     return (
@@ -53,6 +56,7 @@ export const App = () => {
                          deleteTask={deleteTask}
                          changeFilter={changeFilter}
                          toggleMenu={toggleMenu}
+                         createTask={createTask}
             />
 
         </div>

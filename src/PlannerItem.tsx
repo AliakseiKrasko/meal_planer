@@ -9,9 +9,10 @@ type Props = {
     deleteTask: (taskId: string) => void
     changeFilter: (filter: FilterValue) => void
     toggleMenu: (taskId: string) => void
+    createTask: () => void
 }
 
-export const PlannerItem = ( {title, menu, date, deleteTask, toggleMenu, changeFilter }: Props) => {
+export const PlannerItem = ( {title, menu, date, deleteTask, toggleMenu, changeFilter, createTask }: Props) => {
 
     const onChangeHadler = (taskId: string) => {
         toggleMenu(taskId); // Вызываем функцию из пропсов
@@ -22,7 +23,7 @@ export const PlannerItem = ( {title, menu, date, deleteTask, toggleMenu, changeF
             <h3>{title}</h3>
             <div>
                 <input/>
-                <Buttons title='+' />
+                <Buttons title='+' onClick={() => createTask()} />
             </div>
             {menu.length === 0 ? (
             <p>Menu empty</p>) : (
