@@ -29,6 +29,7 @@ export const PlannerItem = ({title, menu, date, deleteTask, toggleMenu, changeFi
                 <Buttons title='+' onClick={() => {
                     if (inputRef.current) {
                         createMenu(inputRef.current.value)
+                        inputRef.current.value = ''
                     }
                 }}
                 />
