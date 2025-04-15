@@ -1,7 +1,7 @@
 import {FilterValue, Menu} from './App.tsx';
 import s from './PlannerItem.module.css'
 import {Buttons} from './Buttons.tsx';
-import {useState} from 'react';
+import {ChangeEvent, useState} from 'react';
 
 
 
@@ -26,6 +26,16 @@ export const PlannerItem = ({title, menu, date, deleteTask, toggleMenu, changeFi
         createMenu(menuTitle)
         setMenuTitle('')
     }
+    const changeMenuTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setMenuTitle(event.currentTarget.value)
+    }
+    const createMenuOnEnterHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            createMenuHandler()
+        }
+    }
+
+
 
 
     return (
@@ -33,12 +43,8 @@ export const PlannerItem = ({title, menu, date, deleteTask, toggleMenu, changeFi
             <h3>{title}</h3>
             <div>
                 <input value={menuTitle}
-                       onChange={(event => setMenuTitle(event.currentTarget.value))}
-                       onKeyDown={event => {
-                           if (event.key === 'Enter') {
-                               createMenuHandler()
-                           }
-                       }}
+                       onChange={changeMenuTitleHandler}
+                       onKeyDown={createMenuOnEnterHandler}
                 />
                 <Buttons title={'+'} onClick={createMenuHandler}/>
             </div>
