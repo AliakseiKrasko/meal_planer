@@ -43,10 +43,10 @@ export const App = () => {
         setMenuPlanner(prevMenu => prevMenu.map(el =>
             el.id === id ? {...el, isDone: !el.isDone} : el))
     }
-    const createTask = () => {
+    const createMenu = (title: string) => {
         const newMenu = {
             id: uuidv4(),
-            title: "new Menu",
+            title: title,
             isDone: false
         }
         const newMenuPlanner = [newMenu, ...menuPlanner]
@@ -63,7 +63,7 @@ export const App = () => {
                          deleteTask={deleteTask}
                          changeFilter={changeFilter}
                          toggleMenu={toggleMenu}
-                         createTask={createTask}
+                         createMenu={createMenu}
             />
 
         </div>
