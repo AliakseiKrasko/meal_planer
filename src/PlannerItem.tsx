@@ -1,7 +1,8 @@
 import {FilterValue, Menu} from './App.tsx';
 import s from './PlannerItem.module.css'
 import {Buttons} from './Buttons.tsx';
-import {useRef} from 'react';
+import {useState} from 'react';
+
 
 type Props = {
     title: string
@@ -15,7 +16,7 @@ type Props = {
 
 export const PlannerItem = ({title, menu, date, deleteTask, toggleMenu, changeFilter, createMenu}: Props) => {
 
-    const inputRef = useRef<HTMLInputElement>(null)
+    const [menuTitle, setMenuTitle] = useState('')
 
     const onChangeHadler = (taskId: string) => {
         toggleMenu(taskId); // Вызываем функцию из пропсов
@@ -25,14 +26,14 @@ export const PlannerItem = ({title, menu, date, deleteTask, toggleMenu, changeFi
         <div className={s.card}>
             <h3>{title}</h3>
             <div>
-                <input ref={inputRef}/>
-                <Buttons title='+' onClick={() => {
-                    if (inputRef.current) {
-                        createMenu(inputRef.current.value)
-                        inputRef.current.value = ''
-                    }
-                }}
-                />
+                <input value={menuTitle} onChange={(event => {
+                    setMenuTitle(event.currentTarget.value)
+
+                })}/>
+                <Buttons title={'+'} onClick={() => {
+                    createMenu(menuTitle)
+                    setMenuTitle('')
+                }}/>
             </div>
             {menu.length === 0 ? (
                 <p>Menu empty</p>) : (
