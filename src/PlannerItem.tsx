@@ -4,6 +4,7 @@ import {Buttons} from './Buttons.tsx';
 import {useState} from 'react';
 
 
+
 type Props = {
     title: string
     menu: Menu[]
@@ -21,19 +22,25 @@ export const PlannerItem = ({title, menu, date, deleteTask, toggleMenu, changeFi
     const onChangeHadler = (taskId: string) => {
         toggleMenu(taskId); // Вызываем функцию из пропсов
     };
+    const createMenuHandler = () => {
+        createMenu(menuTitle)
+        setMenuTitle('')
+    }
+
 
     return (
         <div className={s.card}>
             <h3>{title}</h3>
             <div>
-                <input value={menuTitle} onChange={(event => {
-                    setMenuTitle(event.currentTarget.value)
-
-                })}/>
-                <Buttons title={'+'} onClick={() => {
-                    createMenu(menuTitle)
-                    setMenuTitle('')
-                }}/>
+                <input value={menuTitle}
+                       onChange={(event => setMenuTitle(event.currentTarget.value))}
+                       onKeyDown={event => {
+                           if (event.key === 'Enter') {
+                               createMenuHandler()
+                           }
+                       }}
+                />
+                <Buttons title={'+'} onClick={createMenuHandler}/>
             </div>
             {menu.length === 0 ? (
                 <p>Menu empty</p>) : (
