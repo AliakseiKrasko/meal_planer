@@ -9,7 +9,7 @@ export type Menu = {
     isDone: boolean
 }
 
-export type FilterValue = 'Total calories' | 'Proteins' | 'Fats' | 'Carbs'
+export type FilterValue = 'all' | 'active' | 'completed'
 
 
 export const App = () => {
@@ -21,9 +21,16 @@ export const App = () => {
         {id: uuidv4(), title: 'Banana', isDone: true},
         {id: uuidv4(), title: 'Orange', isDone: true}
     ])
-    const [filter, setFilter] = useState<FilterValue>('Total calories')
+    const [filter, setFilter] = useState<FilterValue>('all')
 
-    const changeFilter = () => {
+    let filteredPlanner = menuPlanner
+    if(filter === 'active'){
+        filteredPlanner = menuPlanner.filter(m =>!m.isDone)
+    }
+    if(filter === 'completed')
+        filteredPlanner = menuPlanner.filter(m => m.isDone)
+
+    const changeFilter = (filter: FilterValue) => {
         setFilter(filter)
     }
     const data = new Date().toLocaleDateString()
@@ -41,7 +48,7 @@ export const App = () => {
     return (
         <div className="app">
             <PlannerItem title='What to eat (morning)'
-                         menu={menuPlanner}
+                         menu={filteredPlanner}
                          date={data}
                          deleteTask={deleteTask}
                          changeFilter={changeFilter}

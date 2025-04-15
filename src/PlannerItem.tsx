@@ -11,7 +11,7 @@ type Props = {
     toggleMenu: (taskId: string) => void
 }
 
-export const PlannerItem = ( {title, menu, date, deleteTask, toggleMenu }: Props) => {
+export const PlannerItem = ( {title, menu, date, deleteTask, toggleMenu, changeFilter }: Props) => {
 
     const onChangeHadler = (taskId: string) => {
         toggleMenu(taskId); // Вызываем функцию из пропсов
@@ -39,9 +39,9 @@ export const PlannerItem = ( {title, menu, date, deleteTask, toggleMenu }: Props
             </ul>
                 )}
             <div className="filterButton">
-                <Buttons title='all' />
-                <Buttons title='active' className={s.filterButton} />
-                <Buttons title='completed' className={s.filterButton} />
+                <Buttons title='all' onClick={() => changeFilter('all')}/>
+                <Buttons title='active' onClick={() => changeFilter('active')} className={s.filterButton} />
+                <Buttons title='completed' onClick={() => changeFilter('completed')} className={s.filterButton} />
             </div>
             <div>{date}</div>
         </div>
