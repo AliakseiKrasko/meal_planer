@@ -16,3 +16,8 @@
 .filterButton {
     margin-left: 3px;
 }
+.error {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+}

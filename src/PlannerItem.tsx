@@ -19,15 +19,17 @@ type Props = {
 export const PlannerItem = ({title, menu, date, deleteTask, toggleMenu, changeFilter, createMenu}: Props) => {
 
     const [menuTitle, setMenuTitle] = useState('')
-
+    const [error, setError] = useState("")
 
     const onChangeHadler = (taskId: string) => {
         toggleMenu(taskId); // Вызываем функцию из пропсов
     };
     const createMenuHandler = () => {
         if (menuTitle.trim() === "") {
+            setError("cannot add an empty field")
             return
         }
+        setError("")
         createMenu(menuTitle.trim())
         setMenuTitle('')
     }
@@ -47,10 +49,12 @@ export const PlannerItem = ({title, menu, date, deleteTask, toggleMenu, changeFi
         <div className={s.card}>
             <h3>{title}</h3>
             <div>
+                {error && <div className={s.error}>{error}</div>}
                 <input value={menuTitle}
                        onChange={changeMenuTitleHandler}
                        onKeyDown={createMenuOnEnterHandler}
                 />
+
                 <Buttons title={'+'} onClick={createMenuHandler}/>
             </div>
             {menu.length === 0 ? (
