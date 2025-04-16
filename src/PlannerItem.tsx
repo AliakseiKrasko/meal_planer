@@ -26,7 +26,7 @@ export const PlannerItem = ({title, menu, date, deleteTask, toggleMenu, changeFi
     };
     const createMenuHandler = () => {
         if (menuTitle.trim() === "") {
-            setError("cannot add an empty field")
+            setError("Title is required")
             return
         }
         setError("")
@@ -49,10 +49,11 @@ export const PlannerItem = ({title, menu, date, deleteTask, toggleMenu, changeFi
         <div className={s.card}>
             <h3>{title}</h3>
             <div>
-                {error && <div className={s.error}>{error}</div>}
+                {error && <div className={s.errorMessage}>{error}</div>}
                 <input value={menuTitle}
                        onChange={changeMenuTitleHandler}
                        onKeyDown={createMenuOnEnterHandler}
+                       className={error ? s.error : ''}
                 />
 
                 <Buttons title={'+'} onClick={createMenuHandler}/>
