@@ -64,6 +64,7 @@ export const App = () => {
                          changeFilter={changeFilter}
                          toggleMenu={toggleMenu}
                          createMenu={createMenu}
+                         filter={filter}
             />
 
         </div>

@@ -4,8 +4,6 @@ import {Buttons} from './Buttons.tsx';
 import {ChangeEvent, useState} from 'react';
 
 
-
-
 type Props = {
     title: string
     menu: Menu[]
@@ -14,9 +12,10 @@ type Props = {
     changeFilter: (filter: FilterValue) => void
     toggleMenu: (taskId: string) => void
     createMenu: (title: string) => void
+    filter: FilterValue
 }
 
-export const PlannerItem = ({title, menu, date, deleteTask, toggleMenu, changeFilter, createMenu}: Props) => {
+export const PlannerItem = ({ filter, title, menu, date, deleteTask, toggleMenu, changeFilter, createMenu}: Props) => {
 
     const [menuTitle, setMenuTitle] = useState('')
     const [error, setError] = useState("")
@@ -34,15 +33,14 @@ export const PlannerItem = ({title, menu, date, deleteTask, toggleMenu, changeFi
         setMenuTitle('')
     }
     const changeMenuTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
-            setMenuTitle(event.currentTarget.value)
+        setMenuTitle(event.currentTarget.value)
+        setError('')
     }
     const createMenuOnEnterHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             createMenuHandler()
         }
     }
-
-
 
 
     return (
@@ -73,9 +71,9 @@ export const PlannerItem = ({title, menu, date, deleteTask, toggleMenu, changeFi
                 </ul>
             )}
             <div className="filterButton">
-                <Buttons title='all' onClick={() => changeFilter('all')}/>
-                <Buttons title='active' onClick={() => changeFilter('active')} className={s.filterButton}/>
-                <Buttons title='completed' onClick={() => changeFilter('completed')} className={s.filterButton}/>
+                <Buttons className={filter === 'all' ? s.activeFilter : ''} title='all' onClick={() => changeFilter('all')}/>
+                <Buttons className={filter === 'active' ? s.activeFilter : s.filterButton} title='active' onClick={() => changeFilter('active')} />
+                <Buttons className={filter === 'completed' ? s.activeFilter : s.filterButton} title='completed' onClick={() => changeFilter('completed')} />
             </div>
             <div>{date}</div>
         </div>

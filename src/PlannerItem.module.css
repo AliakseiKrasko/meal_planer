@@ -24,3 +24,8 @@
     font-size: 0.8em;
     margin-bottom: 5px;
 }
+.activeFilter {
+    background-color: lightgreen;
+    margin-left: 3px;
+    border-radius: 3px;
+}
