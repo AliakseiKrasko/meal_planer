@@ -3,10 +3,17 @@ import {PlannerItem} from './PlannerItem.tsx';
 import {v4 as uuidv4} from 'uuid';
 import {useState} from 'react';
 
-export type Menu = {
+export type MenuGroup = {
     id: string
     title: string
     filter: FilterValue
+    items: Menu[]
+}
+
+export type Menu = {
+    id: string
+    title: string
+    isDone: boolean
 }
 
 export type FilterValue = 'all' | 'active' | 'completed'
@@ -14,59 +21,126 @@ export type FilterValue = 'all' | 'active' | 'completed'
 
 export const App = () => {
 
-    const [menuPlanner, setMenuPlanner] = useState<Menu[]>([
-        {id: uuidv4(), title: 'Apple', filter: 'all'},
-        {id: uuidv4(), title: 'Pear', filter: 'all'},
-        {id: uuidv4(), title: 'Plum', filter: 'all'},
-        {id: uuidv4(), title: 'Banana', filter: 'all'},
-        {id: uuidv4(), title: 'Orange', filter: 'all'}
+    const [menuGroups, setMenuGroups] = useState<MenuGroup[]>([
+        {
+            id: uuidv4(),
+            title: 'Breakfast',
+            filter: 'all',
+            items: [
+                {id: uuidv4(), title: 'Apple', isDone: true},
+                {id: uuidv4(), title: 'Pear', isDone: false},
+            ]
+        },
+        {
+            id: uuidv4(),
+            title: 'Lunch',
+            filter: 'all',
+            items: [
+                {id: uuidv4(), title: 'Plum', isDone: true},
+                {id: uuidv4(), title: 'Banana', isDone: true},
+            ]
+        },
+        {
+            id: uuidv4(),
+            title: 'Dinner',
+            filter: 'all',
+            items: [
+                {id: uuidv4(), title: 'Orange', isDone: true}
+            ]
+        }
     ])
-    const [filter, setFilter] = useState<FilterValue>('all')
+    /*const [filter, setFilter] = useState<FilterValue>('all')
 
     let filteredPlanner = menuPlanner
     if(filter === 'active'){
-        filteredPlanner = menuPlanner.filter(m => m.filter === 'active')
+        filteredPlanner = menuPlanner.filter(m =>!m.isDone)
     }
     if(filter === 'completed')
-        filteredPlanner = menuPlanner.filter(m => m.filter === 'completed')
+        filteredPlanner = menuPlanner.filter(m => m.isDone)
 
-    const changeFilter = (filter: FilterValue) => {
-        setFilter(filter)
-    }
+    }*/
     const data = new Date().toLocaleDateString()
 
-    const deleteTask = (taskId: string) => {
-        setMenuPlanner(prevMenu => prevMenu.filter(m => m.id !== taskId))
+    const toggleMenuItem = (groupId: string, itemId: string) => {
+        setMenuGroups(prev => prev.map(group =>
+            group.id === groupId
+                ? {
+                    ...group,
+                    items: group.items.map(item =>
+                        item.id === itemId ? {...item, isDone: !item.isDone} : item
+                    )
+                }
+                : group
+        ))
     }
 
+    const addMenuItem = (groupId: string, title: string) => {
+        setMenuGroups(prev => prev.map(group =>
+            group.id === groupId
+                ? {
+                    ...group,
+                    items: [
+                        {id: uuidv4(), title, isDone: false},
+                        ...group.items
+                    ]
+                }
+                : group
+        ))
+    }
+
+    const changeGroupFilter = (groupId: string, filter: FilterValue) => {
+        setMenuGroups(prev => prev.map(group =>
+            group.id === groupId ? {...group, filter} : group
+        ))
+    }
+    const deleteTask = (groupId: string, itemId: string) => {
+        setMenuGroups(prev => prev.map(group =>
+            group.id === groupId
+                ? {
+                    ...group,
+                    items: group.items.filter(item => item.id !== itemId)
+                }
+                : group
+        ))
+    }
+
+/*
     const toggleMenu = (id: string) => {
         setMenuPlanner(prevMenu => prevMenu.map(el =>
-            el.id === id ? {...el, filter: el.filter === 'active' ? 'completed' : 'active'} : el))
+            el.id === id ? {...el, isDone: !el.isDone} : el))
     }
     const createMenu = (title: string) => {
-        setMenuPlanner(prevMenu => [
-            {
-                id: uuidv4(),
-                title: title,
-                filter: 'all'
-            },
-            ...prevMenu
-        ]);
-    }
+        const newMenu = {
+            id: uuidv4(),
+            title: title,
+            isDone: false
+        }
+        const newMenuPlanner = [newMenu, ...menuPlanner]
+        setMenuPlanner(newMenuPlanner)
+
+    }*/
 
 
     return (
         <div className="app">
-            <PlannerItem title='What to eat (morning)'
-                         menu={filteredPlanner}
-                         date={data}
-                         deleteTask={deleteTask}
-                         changeFilter={changeFilter}
-                         toggleMenu={toggleMenu}
-                         createMenu={createMenu}
-                         filter={filter}
-            />
-
+            {menuGroups.map(group => (
+                <PlannerItem
+                    key={group.id}
+                    groupId={group.id}
+                    title={group.title}
+                    menu={group.items.filter(item => {
+                        if (group.filter === 'all') return true
+                        if (group.filter === 'active') return !item.isDone
+                        return item.isDone
+                    })}
+                    date={data}
+                    deleteTask={(itemId) => deleteTask(group.id, itemId)}
+                    changeFilter={(filter) => changeGroupFilter(group.id, filter)}
+                    toggleMenu={(itemId) => toggleMenuItem(group.id, itemId)}
+                    createMenu={(title) => addMenuItem(group.id, title)}
+                    filter={group.filter}
+                />
+            ))}
         </div>
     )
 }

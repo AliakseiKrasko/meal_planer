@@ -5,12 +5,13 @@ import {ChangeEvent, useState} from 'react';
 
 
 type Props = {
+    groupId: string
     title: string
     menu: Menu[]
     date?: string
-    deleteTask: (taskId: string) => void
+    deleteTask: (itemId: string) => void
     changeFilter: (filter: FilterValue) => void
-    toggleMenu: (taskId: string) => void
+    toggleMenu: (itemId: string) => void
     createMenu: (title: string) => void
     filter: FilterValue
 }
@@ -61,8 +62,8 @@ export const PlannerItem = ({ filter, title, menu, date, deleteTask, toggleMenu,
                 <ul className={s.list}>
                     {menu.map(m => {
                         return (
-                            <li key={m.id} className={m.filter === 'completed' ? s.isDOneStyle : ''}>
-                                <input type="checkbox" checked={m.filter === 'completed'} onChange={() => onChangeHadler(m.id)}/>
+                            <li key={m.id} className={m.isDone ? s.isDOneStyle : ''}>
+                                <input type="checkbox" checked={m.isDone} onChange={() => onChangeHadler(m.id)}/>
                                 <span>{m.title}</span>
                                 <Buttons title={'х'} onClick={() => deleteTask(m.id)}/>
                             </li>
