@@ -49,16 +49,7 @@ export const App = () => {
             ]
         }
     ])
-    /*const [filter, setFilter] = useState<FilterValue>('all')
 
-    let filteredPlanner = menuPlanner
-    if(filter === 'active'){
-        filteredPlanner = menuPlanner.filter(m =>!m.isDone)
-    }
-    if(filter === 'completed')
-        filteredPlanner = menuPlanner.filter(m => m.isDone)
-
-    }*/
     const data = new Date().toLocaleDateString()
 
     const toggleMenuItem = (groupId: string, itemId: string) => {
@@ -104,21 +95,9 @@ export const App = () => {
         ))
     }
 
-/*
-    const toggleMenu = (id: string) => {
-        setMenuPlanner(prevMenu => prevMenu.map(el =>
-            el.id === id ? {...el, isDone: !el.isDone} : el))
+    const deleteDayMenu = (id: string) => {
+        setMenuGroups(prev => prev.filter(m => m.id !== id))
     }
-    const createMenu = (title: string) => {
-        const newMenu = {
-            id: uuidv4(),
-            title: title,
-            isDone: false
-        }
-        const newMenuPlanner = [newMenu, ...menuPlanner]
-        setMenuPlanner(newMenuPlanner)
-
-    }*/
 
 
     return (
@@ -139,6 +118,7 @@ export const App = () => {
                     toggleMenu={(itemId) => toggleMenuItem(group.id, itemId)}
                     createMenu={(title) => addMenuItem(group.id, title)}
                     filter={group.filter}
+                    deleteDayMenu={deleteDayMenu}
                 />
             ))}
         </div>

@@ -14,14 +14,15 @@ type Props = {
     toggleMenu: (itemId: string) => void
     createMenu: (title: string) => void
     filter: FilterValue
+    deleteDayMenu: (id: string) => void
 }
 
-export const PlannerItem = ({ filter, title, menu, date, deleteTask, toggleMenu, changeFilter, createMenu}: Props) => {
+export const PlannerItem = ({ groupId, deleteDayMenu, filter, title, menu, date, deleteTask, toggleMenu, changeFilter, createMenu}: Props) => {
 
     const [menuTitle, setMenuTitle] = useState('')
     const [error, setError] = useState("")
 
-    const onChangeHadler = (taskId: string) => {
+    const onChangeHandler = (taskId: string) => {
         toggleMenu(taskId); // Вызываем функцию из пропсов
     };
     const createMenuHandler = () => {
@@ -42,11 +43,18 @@ export const PlannerItem = ({ filter, title, menu, date, deleteTask, toggleMenu,
             createMenuHandler()
         }
     }
+    const deleteMenuHandler = () => {
+        deleteDayMenu(groupId)
+    }
 
 
     return (
         <div className={s.card}>
-            <h3>{title}</h3>
+            <div className={s.container}>
+                {title}
+                <Buttons title={'х'} onClick={deleteMenuHandler} />
+            </div>
+
             <div>
                 {error && <div className={s.errorMessage}>{error}</div>}
                 <input value={menuTitle}
@@ -63,7 +71,7 @@ export const PlannerItem = ({ filter, title, menu, date, deleteTask, toggleMenu,
                     {menu.map(m => {
                         return (
                             <li key={m.id} className={m.isDone ? s.isDOneStyle : ''}>
-                                <input type="checkbox" checked={m.isDone} onChange={() => onChangeHadler(m.id)}/>
+                                <input type="checkbox" checked={m.isDone} onChange={() => onChangeHandler(m.id)}/>
                                 <span>{m.title}</span>
                                 <Buttons title={'х'} onClick={() => deleteTask(m.id)}/>
                             </li>
