@@ -6,7 +6,7 @@ import {useState} from 'react';
 export type Menu = {
     id: string
     title: string
-    isDone: boolean
+    filter: FilterValue
 }
 
 export type FilterValue = 'all' | 'active' | 'completed'
@@ -15,20 +15,20 @@ export type FilterValue = 'all' | 'active' | 'completed'
 export const App = () => {
 
     const [menuPlanner, setMenuPlanner] = useState<Menu[]>([
-        {id: uuidv4(), title: 'Apple', isDone: true},
-        {id: uuidv4(), title: 'Pear', isDone: false},
-        {id: uuidv4(), title: 'Plum', isDone: true},
-        {id: uuidv4(), title: 'Banana', isDone: true},
-        {id: uuidv4(), title: 'Orange', isDone: true}
+        {id: uuidv4(), title: 'Apple', filter: 'all'},
+        {id: uuidv4(), title: 'Pear', filter: 'all'},
+        {id: uuidv4(), title: 'Plum', filter: 'all'},
+        {id: uuidv4(), title: 'Banana', filter: 'all'},
+        {id: uuidv4(), title: 'Orange', filter: 'all'}
     ])
     const [filter, setFilter] = useState<FilterValue>('all')
 
     let filteredPlanner = menuPlanner
     if(filter === 'active'){
-        filteredPlanner = menuPlanner.filter(m =>!m.isDone)
+        filteredPlanner = menuPlanner.filter(m => m.filter === 'active')
     }
     if(filter === 'completed')
-        filteredPlanner = menuPlanner.filter(m => m.isDone)
+        filteredPlanner = menuPlanner.filter(m => m.filter === 'completed')
 
     const changeFilter = (filter: FilterValue) => {
         setFilter(filter)
@@ -41,17 +41,17 @@ export const App = () => {
 
     const toggleMenu = (id: string) => {
         setMenuPlanner(prevMenu => prevMenu.map(el =>
-            el.id === id ? {...el, isDone: !el.isDone} : el))
+            el.id === id ? {...el, filter: el.filter === 'active' ? 'completed' : 'active'} : el))
     }
     const createMenu = (title: string) => {
-        const newMenu = {
-            id: uuidv4(),
-            title: title,
-            isDone: false
-        }
-        const newMenuPlanner = [newMenu, ...menuPlanner]
-        setMenuPlanner(newMenuPlanner)
-
+        setMenuPlanner(prevMenu => [
+            {
+                id: uuidv4(),
+                title: title,
+                filter: 'all'
+            },
+            ...prevMenu
+        ]);
     }
 
 

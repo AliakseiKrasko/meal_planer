@@ -61,8 +61,8 @@ export const PlannerItem = ({ filter, title, menu, date, deleteTask, toggleMenu,
                 <ul className={s.list}>
                     {menu.map(m => {
                         return (
-                            <li key={m.id} className={m.isDone ? s.isDOneStyle : ''}>
-                                <input type="checkbox" checked={m.isDone} onChange={() => onChangeHadler(m.id)}/>
+                            <li key={m.id} className={m.filter === 'completed' ? s.isDOneStyle : ''}>
+                                <input type="checkbox" checked={m.filter === 'completed'} onChange={() => onChangeHadler(m.id)}/>
                                 <span>{m.title}</span>
                                 <Buttons title={'х'} onClick={() => deleteTask(m.id)}/>
                             </li>
