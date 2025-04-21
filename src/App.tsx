@@ -39,19 +39,16 @@ export const App = () => {
     }
 
     const changeFilter = (todolistId: string, filter: FilterValues) => {
-        const newTodolist = todolists.map(todolist => {
-            return todolist.id === todolistId ? {...todolist, filter} : todolist
-        })
-        setTodolists(newTodolist)
+        setTodolists(todolists.map(todolist => todolist.id === todolistId ? {...todolist, filter} : todolist))
     }
 
-    let filteredTasks = tasks
+    /*let filteredTasks = tasks
     if (filter === 'active') {
         filteredTasks = tasks.filter(task => !task.isDone)
     }
     if (filter === 'completed') {
         filteredTasks = tasks.filter(task => task.isDone)
-    }
+    }*/
 
     const createTask = (title: string) => {
         const newTask = {id: v1(), title, isDone: false}
