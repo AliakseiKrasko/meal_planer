@@ -1,128 +1,64 @@
 import './App.css'
-import {PlannerItem} from './PlannerItem.tsx';
-import {v4 as uuidv4} from 'uuid';
-import {useState} from 'react';
+import {useState} from 'react'
+import {v1} from 'uuid'
+import {TodolistItem} from './TodolistItem'
 
-export type MenuGroup = {
-    id: string
-    title: string
-    filter: FilterValue
-    items: Menu[]
+export type Task = {
+  id: string
+  title: string
+  isDone: boolean
 }
 
-export type Menu = {
-    id: string
-    title: string
-    isDone: boolean
-}
-
-export type FilterValue = 'all' | 'active' | 'completed'
-
+export type FilterValues = 'all' | 'active' | 'completed'
 
 export const App = () => {
+  const [filter, setFilter] = useState<FilterValues>('all')
 
-    const [menuGroups, setMenuGroups] = useState<MenuGroup[]>([
-        {
-            id: uuidv4(),
-            title: 'Breakfast',
-            filter: 'all',
-            items: [
-                {id: uuidv4(), title: 'Apple', isDone: true},
-                {id: uuidv4(), title: 'Pear', isDone: false},
-            ]
-        },
-        {
-            id: uuidv4(),
-            title: 'Lunch',
-            filter: 'all',
-            items: [
-                {id: uuidv4(), title: 'Plum', isDone: true},
-                {id: uuidv4(), title: 'Banana', isDone: true},
-            ]
-        },
-        {
-            id: uuidv4(),
-            title: 'Dinner',
-            filter: 'all',
-            items: [
-                {id: uuidv4(), title: 'Orange', isDone: true}
-            ]
-        }
-    ])
+  const [tasks, setTasks] = useState<Task[]>([
+    { id: v1(), title: 'HTML&CSS', isDone: true },
+    { id: v1(), title: 'JS', isDone: true },
+    { id: v1(), title: 'ReactJS', isDone: false },
+  ])
 
-    const data = new Date().toLocaleDateString()
+  const deleteTask = (taskId: string) => {
+    const filteredTasks = tasks.filter(task => {
+      return task.id !== taskId
+    })
+    setTasks(filteredTasks)
+  }
 
-    const toggleMenuItem = (groupId: string, itemId: string) => {
-        setMenuGroups(prev => prev.map(group =>
-            group.id === groupId
-                ? {
-                    ...group,
-                    items: group.items.map(item =>
-                        item.id === itemId ? {...item, isDone: !item.isDone} : item
-                    )
-                }
-                : group
-        ))
-    }
+  const changeFilter = (filter: FilterValues) => {
+    setFilter(filter)
+  }
 
-    const addMenuItem = (groupId: string, title: string) => {
-        setMenuGroups(prev => prev.map(group =>
-            group.id === groupId
-                ? {
-                    ...group,
-                    items: [
-                        {id: uuidv4(), title, isDone: false},
-                        ...group.items
-                    ]
-                }
-                : group
-        ))
-    }
+  let filteredTasks = tasks
+  if (filter === 'active') {
+    filteredTasks = tasks.filter(task => !task.isDone)
+  }
+  if (filter === 'completed') {
+    filteredTasks = tasks.filter(task => task.isDone)
+  }
 
-    const changeGroupFilter = (groupId: string, filter: FilterValue) => {
-        setMenuGroups(prev => prev.map(group =>
-            group.id === groupId ? {...group, filter} : group
-        ))
-    }
-    const deleteTask = (groupId: string, itemId: string) => {
-        setMenuGroups(prev => prev.map(group =>
-            group.id === groupId
-                ? {
-                    ...group,
-                    items: group.items.filter(item => item.id !== itemId)
-                }
-                : group
-        ))
-    }
+  const createTask = (title: string) => {
+    const newTask = {id: v1(), title, isDone: false}
+    const newTasks = [newTask, ...tasks]
+    setTasks(newTasks)
+  }
 
-    const deleteDayMenu = (id: string) => {
-        setMenuGroups(prev => prev.filter(m => m.id !== id))
-    }
+  const changeTaskStatus = (taskId: string, isDone: boolean) => {
+    const newState = tasks.map(task => task.id == taskId ? { ...task, isDone } : task)
+    setTasks(newState)
+  }
 
-
-    return (
-        <div className="app">
-            {menuGroups.map(group => (
-                <PlannerItem
-                    key={group.id}
-                    groupId={group.id}
-                    title={group.title}
-                    menu={group.items.filter(item => {
-                        if (group.filter === 'all') return true
-                        if (group.filter === 'active') return !item.isDone
-                        return item.isDone
-                    })}
-                    date={data}
-                    deleteTask={(itemId) => deleteTask(group.id, itemId)}
-                    changeFilter={(filter) => changeGroupFilter(group.id, filter)}
-                    toggleMenu={(itemId) => toggleMenuItem(group.id, itemId)}
-                    createMenu={(title) => addMenuItem(group.id, title)}
-                    filter={group.filter}
-                    deleteDayMenu={deleteDayMenu}
-                />
-            ))}
-        </div>
-    )
+  return (
+      <div className="app">
+        <TodolistItem title="What to learn"
+                      tasks={filteredTasks}
+                      deleteTask={deleteTask}
+                      changeFilter={changeFilter}
+                      createTask={createTask}
+                      changeTaskStatus={changeTaskStatus}
+                      filter={filter}/>
+      </div>
+  )
 }
-
-
