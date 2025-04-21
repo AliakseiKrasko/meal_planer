@@ -20,35 +20,38 @@ export type FilterValues = 'all' | 'active' | 'completed'
 
 export const App = () => {
 
+    const todolistId1 = v1()
+    const todolistId2 = v1()
+
     const [todolists, setTodolists] = useState<Todolist[]>([
-        {id: v1(), title: 'What to learn', filter: 'all'},
-        {id: v1(), title: 'What to buy', filter: 'all'}
+        {id: todolistId1, title: 'What to learn', filter: 'all'},
+        {id: todolistId2, title: 'What to buy', filter: 'all'}
     ])
 
-    const [tasks, setTasks] = useState<Task[]>([
-        {id: v1(), title: 'HTML&CSS', isDone: true},
-        {id: v1(), title: 'JS', isDone: true},
-        {id: v1(), title: 'ReactJS', isDone: false},
-    ])
+    const [tasks, setTasks] = useState({
+        [todolistId1]: [
+            {id: v1(), title: 'HTML&CSS', isDone: true},
+            {id: v1(), title: 'JS', isDone: true},
+            {id: v1(), title: 'ReactJS', isDone: false},
+        ],
+        [todolistId2]: [
+            {id: v1(), title: 'Rest API', isDone: true},
+            {id: v1(), title: 'GraphQL', isDone: true},
+        ],
+    })
 
-    const deleteTask = (taskId: string) => {
-        const filteredTasks = tasks.filter(task => {
-            return task.id !== taskId
-        })
-        setTasks(filteredTasks)
+
+    const deleteTask = (todolistId: string, taskId: string) => {
+        const todolistTasks = tasks[todolistId]
+        const newTodolistTasks = todolistTasks.filter(t => t.id !== taskId)
+       tasks[todolistId] = newTodolistTasks
+        setTasks({...tasks})
     }
 
     const changeFilter = (todolistId: string, filter: FilterValues) => {
         setTodolists(todolists.map(todolist => todolist.id === todolistId ? {...todolist, filter} : todolist))
     }
 
-    /*let filteredTasks = tasks
-    if (filter === 'active') {
-        filteredTasks = tasks.filter(task => !task.isDone)
-    }
-    if (filter === 'completed') {
-        filteredTasks = tasks.filter(task => task.isDone)
-    }*/
 
     const createTask = (title: string) => {
         const newTask = {id: v1(), title, isDone: false}
