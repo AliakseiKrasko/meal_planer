@@ -1,26 +1,25 @@
 import {type ChangeEvent, type KeyboardEvent, useState} from 'react'
-import type {FilterValues, Task} from './App'
+import type {FilterValues, Task, Todolist} from './App'
 import {Button} from './Button'
 
 type Props = {
-  title: string
+  todolist: Todolist
   tasks: Task[]
   deleteTask: (taskId: string) => void
   changeFilter: (filter: FilterValues) => void
   createTask: (title: string) => void
   changeTaskStatus: (taskId: string, isDone: boolean) => void
-  filter: FilterValues
+
 }
 
 export const TodolistItem = (props: Props) => {
   const {
-    title,
+    todolist: {title, filter},
     tasks,
     deleteTask,
     changeFilter,
     createTask,
     changeTaskStatus,
-    filter,
   } = props
 
   const [taskTitle, setTaskTitle] = useState('')
