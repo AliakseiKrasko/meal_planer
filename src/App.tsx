@@ -4,6 +4,8 @@ import {v1} from 'uuid'
 import {TodolistItem} from './TodolistItem'
 
 
+export type TasksState = Record<string, Task[]>
+
 export type Todolist = {
     id: string
     title: string
@@ -28,7 +30,7 @@ export const App = () => {
         {id: todolistId2, title: 'What to buy', filter: 'all'}
     ])
 
-    const [tasks, setTasks] = useState({
+    const [tasks, setTasks] = useState<TasksState>({
         [todolistId1]: [
             {id: v1(), title: 'HTML&CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
@@ -60,6 +62,8 @@ export const App = () => {
     }
     const deleteTodolist = (todolistId: string) => {
         setTodolists(todolists.filter(todolist => todolist.id !== todolistId))
+        delete tasks[todolistId]
+        setTasks({...tasks})
     }
 
     return (
