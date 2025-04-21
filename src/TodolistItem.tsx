@@ -5,7 +5,7 @@ import {Button} from './Button'
 type Props = {
   todolist: Todolist
   tasks: Task[]
-  deleteTask: (taskId: string) => void
+  deleteTask: (todolistId: string, taskId: string) => void
   changeFilter: (todolistId: string, filter: FilterValues) => void
   createTask: (title: string) => void
   changeTaskStatus: (taskId: string, isDone: boolean) => void
@@ -67,7 +67,7 @@ export const TodolistItem = (props: Props) => {
             <ul>
               {tasks.map(task => {
                 const deleteTaskHandler = () => {
-                  deleteTask(task.id)
+                  deleteTask(task.id, id)
                 }
 
                 const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
