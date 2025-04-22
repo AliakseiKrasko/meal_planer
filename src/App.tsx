@@ -3,6 +3,13 @@ import {useState} from 'react'
 import {v1} from 'uuid'
 import {TodolistItem} from './TodolistItem'
 import {CreateItemForm} from './CreateItemForm.tsx';
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import Container from '@mui/material/Container'
+import {Grid, Paper} from '@mui/material';
 
 
 export type TasksState = Record<string, Task[]>
@@ -81,7 +88,21 @@ export const App = () => {
 
     return (
         <div className="app">
+            <AppBar position="static">
+                <Toolbar>
+                    <Container maxWidth={'lg'}>
+                    <IconButton color="inherit">
+                        <MenuIcon />
+                    </IconButton>
+                    <Button color="inherit">Sign in</Button>
+                    </Container>
+                </Toolbar>
+            </AppBar>
+            <Container maxWidth={'lg'}>
+                <Grid container>
             <CreateItemForm onCreateItem={CreateTodolist} />
+                </Grid>
+                <Grid container spacing={4}>
             {todolists.map(todolist => {
                 const todolistTask = tasks[todolist.id]
                 let filteredTasks = todolistTask
@@ -92,19 +113,25 @@ export const App = () => {
                     filteredTasks = todolistTask.filter(task => task.isDone)
                 }
                 return (
-                    <TodolistItem key={todolist.id}
-                                  todolist={todolist}
-                                  tasks={filteredTasks}
-                                  deleteTask={deleteTask}
-                                  changeFilter={changeFilter}
-                                  createTask={createTask}
-                                  changeTaskStatus={changeTaskStatus}
-                                  deleteTodolist={deleteTodolist}
-                                  changeTaskTitle={changeTaskTitle}
-                                  changeTodolistTitle={changeTodolistTitle}
-                    />
+                    <Grid key={todolist.id}>
+                        <Paper>
+                            <TodolistItem key={todolist.id}
+                                          todolist={todolist}
+                                          tasks={filteredTasks}
+                                          deleteTask={deleteTask}
+                                          changeFilter={changeFilter}
+                                          createTask={createTask}
+                                          changeTaskStatus={changeTaskStatus}
+                                          deleteTodolist={deleteTodolist}
+                                          changeTaskTitle={changeTaskTitle}
+                                          changeTodolistTitle={changeTodolistTitle}
+                            />
+                        </Paper>
+                    </Grid>
                 )
             })}
+                </Grid>
+            </Container>
         </div>
     )
 }

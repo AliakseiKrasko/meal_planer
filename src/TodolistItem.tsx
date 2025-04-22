@@ -5,6 +5,9 @@ import {EditableSpan} from './EditableSpan.tsx';
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Button from '@mui/material/Button'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import {Checkbox} from '@mui/material';
 
 type Props = {
     todolist: Todolist
@@ -57,14 +60,13 @@ export const TodolistItem = (props: Props) => {
                 <IconButton onClick={deleteTodolistHandler}>
                     <DeleteIcon />
                 </IconButton>
-                {/*<Button title={'x'} onClick={deleteTodolistHandler}/>*/}
             </div>
             <CreateItemForm onCreateItem={createTaskHandler} />
 
             {tasks.length === 0 ? (
                 <p>Тасок нет</p>
             ) : (
-                <ul>
+                <List>
                     {tasks.map(task => {
                         const deleteTaskHandler = () => {
                             deleteTask(id, task.id)
@@ -79,19 +81,16 @@ export const TodolistItem = (props: Props) => {
                         }
 
                         return (
-                            <li key={task.id} className={task.isDone ? 'is-done' : ''}>
-                                <input type="checkbox" checked={task.isDone}
-                                       onChange={changeTaskStatusHandler}/>
+                            <ListItem key={task.id} className={task.isDone ? 'is-done' : ''}>
+                                <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler} />
                                 <EditableSpan value={task.title} onChange={changeTaskTitleHandler} />
-                                {/*<span>{task.title}</span>*/}
-                                {/*<Button title={'x'} onClick={deleteTaskHandler}/>*/}
                                 <IconButton onClick={deleteTaskHandler}>
                                     <DeleteIcon />
                                 </IconButton>
-                            </li>
+                            </ListItem>
                         )
                     })}
-                </ul>
+                </List>
             )}
             <div>
                 <Button variant={filter === 'all' ? 'outlined' : 'text'}
