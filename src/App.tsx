@@ -75,6 +75,9 @@ export const App = () => {
     const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title} : t)})
     }
+    const changeTodolistTitle = (todolistId: string, title: string) => {
+        setTodolists(todolists.map(t => t.id === todolistId ? {...t, title} : t))
+    }
 
     return (
         <div className="app">
@@ -98,6 +101,7 @@ export const App = () => {
                                   changeTaskStatus={changeTaskStatus}
                                   deleteTodolist={deleteTodolist}
                                   changeTaskTitle={changeTaskTitle}
+                                  changeTodolistTitle={changeTodolistTitle}
                     />
                 )
             })}

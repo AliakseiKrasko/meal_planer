@@ -3,6 +3,7 @@ import {ChangeEvent, useState} from 'react';
 type Props = {
     value: string
     onChange: (title: string) => void
+
 }
 
 export const EditableSpan = ({ value, onChange }: Props) => {
