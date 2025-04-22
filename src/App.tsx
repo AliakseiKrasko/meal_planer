@@ -11,8 +11,11 @@ import Container from '@mui/material/Container'
 import {Grid, Paper} from '@mui/material';
 import {containerSx} from './TodolistItem.styles.ts';
 import {NavButton} from './NavButton.ts';
+import {createTheme, ThemeProvider} from '@mui/material/styles'
+import Switch from '@mui/material/Switch'
+import CssBaseline from '@mui/material/CssBaseline'
 
-
+type ThemeMode = 'dark' | 'light'
 export type TasksState = Record<string, Task[]>
 
 export type Todolist = {
@@ -50,7 +53,16 @@ export const App = () => {
             {id: v1(), title: 'GraphQL', isDone: true},
         ],
     })
+    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
+    const theme = createTheme({
+        palette: {
+            mode: themeMode,
+            primary: {
+                main: '#087EA4',
+            },
+        },
+    })
 
     const deleteTask = (todolistId: string, taskId: string) => {
         setTasks({ ...tasks, [todolistId]: tasks[todolistId].filter(task => task.id !== taskId) })
@@ -86,9 +98,14 @@ export const App = () => {
     const changeTodolistTitle = (todolistId: string, title: string) => {
         setTodolists(todolists.map(t => t.id === todolistId ? {...t, title} : t))
     }
+    const changeMode = () => {
+        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
+    }
 
     return (
-        <div className="app">
+        <div className='app'>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
             <AppBar position="static" sx={{ mb: '30px' }}>
                 <Toolbar>
                     <Container maxWidth={'lg'} sx={containerSx}>
@@ -98,7 +115,8 @@ export const App = () => {
                     <div>
                         <NavButton>Sign in</NavButton>
                         <NavButton>Sign up</NavButton>
-                        <NavButton>Faq</NavButton>
+                        <NavButton background={theme.palette.primary.dark}>Faq</NavButton>
+                        <Switch color={'default'} onChange={changeMode} />
                     </div>
                     </Container>
                 </Toolbar>
@@ -137,6 +155,7 @@ export const App = () => {
             })}
                 </Grid>
             </Container>
+        </ThemeProvider>
         </div>
     )
 }
