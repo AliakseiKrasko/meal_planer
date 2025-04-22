@@ -2,6 +2,7 @@ import {type ChangeEvent} from 'react'
 import type {FilterValues, Task, Todolist} from './App'
 import {Button} from './Button'
 import {CreateItemForm} from './CreateItemForm.tsx';
+import {EditableSpan} from './EditableSpan.tsx';
 
 type Props = {
     todolist: Todolist
@@ -45,14 +46,7 @@ export const TodolistItem = (props: Props) => {
                 <Button title={'x'} onClick={deleteTodolistHandler}/>
             </div>
             <CreateItemForm onCreateItem={createTaskHandler} />
-            {/*<div>
-                <input className={error ? 'error' : ''}
-                       value={taskTitle}
-                       onChange={changeTaskTitleHandler}
-                       onKeyDown={createTaskOnEnterHandler}/>
-                <Button title={'+'} onClick={createTaskHandler}/>
-                {error && <div className={'error-message'}>{error}</div>}
-            </div>*/}
+
             {tasks.length === 0 ? (
                 <p>Тасок нет</p>
             ) : (
@@ -71,7 +65,8 @@ export const TodolistItem = (props: Props) => {
                             <li key={task.id} className={task.isDone ? 'is-done' : ''}>
                                 <input type="checkbox" checked={task.isDone}
                                        onChange={changeTaskStatusHandler}/>
-                                <span>{task.title}</span>
+                                <EditableSpan value={task.title} />
+                                {/*<span>{task.title}</span>*/}
                                 <Button title={'x'} onClick={deleteTaskHandler}/>
                             </li>
                         )
