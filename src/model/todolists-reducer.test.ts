@@ -1,7 +1,7 @@
 import {v1} from 'uuid'
 import { expect, test } from 'vitest'
 import type {Todolist} from '../App'
-import {todolistsReducer} from './todolists-reducer'
+import {deleteTodolistAC, todolistsReducer} from './todolist-reducers.ts'
 
 test('correct todolist should be deleted', () => {
     const todolistId1 = v1()
@@ -19,8 +19,8 @@ test('correct todolist should be deleted', () => {
         payload: {
             id: todolistId1,
         },
-    }
-    const endState = todolistsReducer(startState, action)
+    } as const
+    const endState = todolistsReducer(startState, deleteTodolistAC(todolistId1))
 
     // 3. Проверка, что действие измененило state соответствующим образом
     // в массиве останется один тудулист
