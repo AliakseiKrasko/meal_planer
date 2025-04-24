@@ -1,6 +1,6 @@
 import { beforeEach, expect, test } from 'vitest'
 import type {TasksState} from '../App'
-import {changeTaskStatusAC, createTaskAC, deleteTaskAC, tasksReducer} from './tasks-reducer.ts';
+import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC, tasksReducer} from './tasks-reducer.ts';
 import {createTodolistAC, deleteTodolistAC} from './todolist-reducers.ts';
 import {v1} from 'uuid';
 
@@ -87,5 +87,15 @@ test('correct task should change its status', () => {
     )
 
     expect(endState.todolistId2[1].isDone).toBe(false)
+    expect(endState.todolistId2.length).toBe(3)
+})
+
+test('correct task should change its title', () => {
+    const endState = tasksReducer(
+        startState,
+        changeTaskTitleAC({ todolistId: 'todolistId2', taskId: '2', title: 'asd' })
+    )
+
+    expect(endState.todolistId2[1].title).toBe('asd')
     expect(endState.todolistId2.length).toBe(3)
 })
