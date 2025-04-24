@@ -1,5 +1,5 @@
 import type {TasksState} from '../App'
-import {CreateTodolistAction} from './todolist-reducers.ts';
+import {CreateTodolistAction, DeleteTodolistAction} from './todolist-reducers.ts';
 
 const initialState: TasksState = {}
 
@@ -9,6 +9,11 @@ export const tasksReducer = (state: TasksState = initialState, action: Actions):
         case 'create_todolist': {
             return {...state, [action.payload.id]: []}
         }
+        case 'delete_todolist': {
+            const newState = {...state}
+            delete newState[action.payload.id]
+            return newState
+        }
         default:
             return state
     }
@@ -17,4 +22,4 @@ export const tasksReducer = (state: TasksState = initialState, action: Actions):
 
 // export type CreateTodolistAction = ReturnType<any>
 
-type Actions = CreateTodolistAction
+type Actions = CreateTodolistAction | DeleteTodolistAction

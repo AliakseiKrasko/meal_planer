@@ -1,7 +1,7 @@
 import { beforeEach, expect, test } from 'vitest'
 import type {TasksState} from '../App'
 import {tasksReducer} from './tasks-reducer.ts';
-import {createTodolistAC} from './todolist-reducers.ts';
+import {createTodolistAC, deleteTodolistAC} from './todolist-reducers.ts';
 import {v1} from 'uuid';
 
 let startState: TasksState = {}
@@ -32,4 +32,15 @@ test('array should be created for new todolist', () => {
 
     expect(keys.length).toBe(3)
     expect(endState[newKey]).toEqual([])
+})
+
+test('property with todolistId should be deleted', () => {
+    const endState = tasksReducer(startState, deleteTodolistAC('todolistId2'))
+
+    const keys = Object.keys(endState)
+
+    expect(keys.length).toBe(1)
+    expect(endState['todolistId2']).not.toBeDefined()
+    // or
+    expect(endState['todolistId2']).toBeUndefined()
 })
