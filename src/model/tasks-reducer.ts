@@ -1,15 +1,20 @@
 import type {TasksState} from '../App'
+import {CreateTodolistAction} from './todolist-reducers.ts';
 
 const initialState: TasksState = {}
 
+
 export const tasksReducer = (state: TasksState = initialState, action: Actions): TasksState => {
     switch (action.type) {
-        case '': {
-            return state
+        case 'create_todolist': {
+            return {...state, [action.payload.id]: []}
         }
         default:
             return state
     }
 }
 
-type Actions = any
+
+// export type CreateTodolistAction = ReturnType<any>
+
+type Actions = CreateTodolistAction
