@@ -1,5 +1,6 @@
 import type {TasksState} from '../App'
 import {CreateTodolistAction, DeleteTodolistAction} from './todolist-reducers.ts';
+import {v1} from 'uuid';
 
 const initialState: TasksState = {}
 
@@ -15,18 +16,29 @@ export const tasksReducer = (state: TasksState = initialState, action: Actions):
             return newState
         }
         case 'delete_task': {
-            return { ...state, [action.payload.todolistId]: state[action.payload.todolistId].filter(task => task.id !== action.payload.taskId) }
+            return {
+                ...state,
+                [action.payload.todolistId]: state[action.payload.todolistId].filter(task => task.id !== action.payload.taskId)
+            }
+        }
+        case 'create_task': {
+            const newTask = {id: v1(), title: action.payload.title , isDone: false}
+            return {...state, [action.payload.todolistId]: [newTask, ...state[action.payload.todolistId]]}
         }
         default:
             return state
     }
 }
 
-export const deleteTaskAC = (payload: {todolistId: string, taskId: string}) => {
+export const deleteTaskAC = (payload: { todolistId: string, taskId: string }) => {
     return {type: 'delete_task', payload} as const
+}
+export const createTaskAC = (payload: { todolistId: string, title: string }) => {
+    return {type: 'create_task', payload} as const
 }
 
 export type DeleteTaskAction = ReturnType<typeof deleteTaskAC>
+export type CreateTaskAction = ReturnType<typeof createTaskAC>
 
 
-type Actions = CreateTodolistAction | DeleteTodolistAction | DeleteTaskAction
+type Actions = CreateTodolistAction | DeleteTodolistAction | DeleteTaskAction | CreateTaskAction
