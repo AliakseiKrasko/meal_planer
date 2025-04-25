@@ -27,6 +27,8 @@ import {
     deleteTaskAC,
     tasksReducer
 } from '../model/tasks-reducer.ts';
+import {useSelector} from 'react-redux';
+import {RootState} from './store.ts';
 
 type ThemeMode = 'dark' | 'light'
 export type TasksState = Record<string, Task[]>
@@ -46,6 +48,9 @@ export type Task = {
 export type FilterValues = 'all' | 'active' | 'completed'
 
 export const App = () => {
+
+    const todolist = useSelector<RootState, Todolist[]>(state => state.todolists)
+    const tasks = useSelector<RootState, TasksState>(state => state.tasks)
 
 
     const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [])
