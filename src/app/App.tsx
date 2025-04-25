@@ -1,16 +1,16 @@
 import './App.css'
 import {useReducer, useState} from 'react'
 import {v1} from 'uuid'
-import {TodolistItem} from './TodolistItem'
-import {CreateItemForm} from './CreateItemForm.tsx';
+import {TodolistItem} from '../TodolistItem.tsx'
+import {CreateItemForm} from '../CreateItemForm.tsx';
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import {Grid, Paper} from '@mui/material';
-import {containerSx} from './TodolistItem.styles.ts';
-import {NavButton} from './NavButton.ts';
+import {containerSx} from '../TodolistItem.styles.ts';
+import {NavButton} from '../NavButton.ts';
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -19,14 +19,14 @@ import {
     createTodolistAC,
     deleteTodolistAC,
     todolistsReducer
-} from './model/todolist-reducers.ts';
+} from '../model/todolist-reducers.ts';
 import {
     changeTaskStatusAC,
     changeTaskTitleAC,
     createTaskAC,
     deleteTaskAC,
     tasksReducer
-} from './model/tasks-reducer.ts';
+} from '../model/tasks-reducer.ts';
 
 type ThemeMode = 'dark' | 'light'
 export type TasksState = Record<string, Task[]>

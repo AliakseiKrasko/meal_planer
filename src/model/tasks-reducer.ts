@@ -1,4 +1,4 @@
-import {TasksState} from '../App'
+import {TasksState} from '../app/App.tsx'
 import {CreateTodolistAction, DeleteTodolistAction} from './todolist-reducers.ts';
 import {v1} from 'uuid';
 
