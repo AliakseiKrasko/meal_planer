@@ -2,7 +2,8 @@ import { beforeEach, expect, test } from 'vitest'
 import type {TasksState} from '../app/App.tsx'
 import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC, tasksReducer} from './tasks-reducer.ts';
 import {createTodolistAC, deleteTodolistAC} from './todolist-reducers.ts';
-import {v1} from 'uuid';
+import { nanoid } from '@reduxjs/toolkit'
+
 
 let startState: TasksState = {}
 
@@ -22,7 +23,7 @@ beforeEach(() => {
 })
 
 test('array should be created for new todolist', () => {
-    const endState = tasksReducer(startState, createTodolistAC(v1(), 'New todolist'))
+    const endState = tasksReducer(startState, createTodolistAC(nanoid(), 'New todolist'))
 
     const keys = Object.keys(endState)
     const newKey = keys.find(k => k !== 'todolistId1' && k !== 'todolistId2')
@@ -35,7 +36,7 @@ test('array should be created for new todolist', () => {
 })
 
 test('property with todolistId should be deleted', () => {
-    const endState = tasksReducer(startState, deleteTodolistAC('todolistId2'))
+    const endState = tasksReducer(startState, deleteTodolistAC({id: 'todolistId2'}))
 
     const keys = Object.keys(endState)
 
