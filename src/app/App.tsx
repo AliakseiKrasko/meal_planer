@@ -1,5 +1,4 @@
 import './App.css'
-import { useState } from 'react'
 import { TodolistItem } from '../TodolistItem.tsx'
 import { CreateItemForm } from '../CreateItemForm.tsx'
 import AppBar from '@mui/material/AppBar'
@@ -10,7 +9,7 @@ import Container from '@mui/material/Container'
 import { Grid, Paper } from '@mui/material'
 import { containerSx } from '../TodolistItem.styles.ts'
 import { NavButton } from '../NavButton.ts'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
 import {
@@ -24,6 +23,9 @@ import { useAppDispatch } from './common/hooks/useAppDispatch.ts'
 import { useAppSelector } from './common/hooks/useAppSelector.ts'
 import { selectTodolists } from '../model/todolists-selectors.ts'
 import { selectTasks } from '../model/tasks-selectors.ts'
+import { selectThemeMode } from './app-selectors.ts'
+import { changeThemeModeAC } from './app-reducer.ts'
+import { getTheme } from './common/theme/theme.ts'
 
 
 export type Todolist = {
@@ -41,29 +43,22 @@ export type Task = {
 export type FilterValues = 'all' | 'active' | 'completed'
 
 export type TasksState = Record<string, Task[]>
-type ThemeMode = 'dark' | 'light'
+
 
 export const App = () => {
 
   const todolist = useAppSelector(selectTodolists)
   const tasks = useAppSelector(selectTasks)
+  const themeMode = useAppSelector(selectThemeMode)
+  const theme = getTheme(themeMode)
 
   const dispatch = useAppDispatch()
 
 
-  const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
-  const theme = createTheme({
-    palette: {
-      mode: themeMode,
-      primary: {
-        main: '#087EA4',
-      },
-    },
-  })
 
   const changeMode = () => {
-    setThemeMode(themeMode === 'light' ? 'dark' : 'light')
+    dispatch(changeThemeModeAC(themeMode === 'light' ? 'dark' : 'light'))
   }
   const changeFilter = (todolistId: string, filter: FilterValues) => {
     dispatch(changeTodolistFilterAC({ id: todolistId, filter }))
