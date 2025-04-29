@@ -3,7 +3,8 @@ import { createTodolistAC } from '@/features/model/todolist-reducers.ts'
 import { Grid } from '@mui/material'
 import { CreateItemForm } from '@/common/components/CreateItemForm/CreateItemForm.tsx'
 import Container from '@mui/material/Container'
-import Todolists from '@/Todolists.tsx'
+import { Todolists } from '@/features/ui/Todolists.tsx'
+
 
 
 export const Main = () => {
