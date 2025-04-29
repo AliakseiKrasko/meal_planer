@@ -1,4 +1,4 @@
-import { ThemeMode } from '@/app/app-reducer'
+import { ThemeMode } from '@/app/app-reducer.ts'
 import { createTheme } from '@mui/material/styles'
 
 
