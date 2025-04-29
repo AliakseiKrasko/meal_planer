@@ -1,16 +1,16 @@
-import { changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC, Task } from '@/model/tasks-reducer.ts'
+import { changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC, Task } from '@/features/model/tasks-reducer.ts'
 import { Grid, Paper } from '@mui/material'
 import { TodolistItem } from '@/TodolistItem.tsx'
 import { useAppSelector } from '@/common/hooks/useAppSelector.ts'
-import { selectTodolists } from '@/model/todolists-selectors.ts'
-import { selectTasks } from '@/model/tasks-selectors.ts'
+import { selectTodolists } from '@/features/model/todolists-selectors.ts'
+import { selectTasks } from '@/features/model/tasks-selectors.ts'
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts'
 import {
   changeTodolistFilterAC,
   changeTodolistTitleAC,
   deleteTodolistAC,
   FilterValues,
-} from '@/model/todolist-reducers.ts'
+} from '@/features/model/todolist-reducers.ts'
 
 
 const Todolists = () => {

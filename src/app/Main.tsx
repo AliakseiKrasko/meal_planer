@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts'
-import { createTodolistAC } from '@/model/todolist-reducers.ts'
+import { createTodolistAC } from '@/features/model/todolist-reducers.ts'
 import { Grid } from '@mui/material'
 import { CreateItemForm } from '@/common/components/CreateItemForm/CreateItemForm.tsx'
 import Container from '@mui/material/Container'

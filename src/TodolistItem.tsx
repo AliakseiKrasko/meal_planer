@@ -9,8 +9,8 @@ import ListItem from '@mui/material/ListItem'
 import {Checkbox} from '@mui/material';
 import Box from '@mui/material/Box'
 import {containerSx, getListItemSx} from './TodolistItem.styles.ts';
-import { FilterValues, Todolist } from '@/model/todolist-reducers.ts'
-import { Task } from '@/model/tasks-reducer.ts'
+import { FilterValues, Todolist } from '@/features/model/todolist-reducers.ts'
+import { Task } from '@/features/model/tasks-reducer.ts'
 
 
 type Props = {
