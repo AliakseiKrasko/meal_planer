@@ -18,7 +18,7 @@ export const AppHttpRequests = () => {
   }, [])
 
   const createTodolist = (title: string) => {
-    instance.post<BaseResponse<{ item: Todolist }>>('/todo-lists', {title}).then(res => {
+    todolistsApi.createTodolist(title).then(res => {
       const newTodolist = res.data.data.item
       setTodolists([newTodolist, ...todolists])
     })
