@@ -1,7 +1,7 @@
 import {type ChangeEvent, type CSSProperties, useEffect, useState} from 'react'
 import Checkbox from '@mui/material/Checkbox'
-import {BaseResponse, CreateItemForm, EditableSpan} from '@/common/components';
-import {instance} from '@/common/instance/instance.ts';
+import {CreateItemForm, EditableSpan} from '@/common/components';
+
 import {Todolist} from '@/features/todolists/api/todolistsApi.types.ts';
 import {todolistsApi} from '@/features/todolists/api/todolistsApi.ts';
 
@@ -25,7 +25,7 @@ export const AppHttpRequests = () => {
   }
 
   const deleteTodolist = (id: string) => {
-    instance.delete<BaseResponse>(`/todo-lists/${id}`).then(res => {
+    todolistsApi.deleteTodolist(id).then(res => {
       if (res.data.resultCode === 0) {
         setTodolists(todolists.filter(t => t.id !== id))
       }
