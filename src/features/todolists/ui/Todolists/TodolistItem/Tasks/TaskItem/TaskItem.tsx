@@ -1,3 +1,4 @@
+import {EditableSpan} from '@/common/components/EditableSpan/EditableSpan'
 import {useAppDispatch} from '@/common/hooks/useAppDispatch'
 import {
   changeTaskStatusAC,
@@ -8,10 +9,9 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete'
 import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
-import ListItem from '@mui/material/ListItem';
+import ListItem from '@mui/material/ListItem'
 import type {ChangeEvent} from 'react'
 import {getListItemSx} from './TaskItem.styles'
-import { EditableSpan } from '@/common/components/EditableSpan/EditableSpan.tsx'
 
 type Props = {
   task: Task
@@ -34,16 +34,15 @@ export const TaskItem = ({task, todolistId}: Props) => {
     dispatch(changeTaskTitleAC({todolistId, taskId: task.id, title}))
   }
 
-
   return (
-    <ListItem sx={getListItemSx(task.isDone)}>
-  <div>
-    <Checkbox checked={task.isDone} onChange={changeTaskStatus}/>
-  <EditableSpan value={task.title} onChange={changeTaskTitle} />
-  </div>
-  <IconButton onClick={deleteTask}>
-    <DeleteIcon />
-    </IconButton>
-    </ListItem>
-)
+      <ListItem sx={getListItemSx(task.isDone)}>
+        <div>
+          <Checkbox checked={task.isDone} onChange={changeTaskStatus}/>
+          <EditableSpan value={task.title} onChange={changeTaskTitle} />
+        </div>
+        <IconButton onClick={deleteTask}>
+          <DeleteIcon />
+        </IconButton>
+      </ListItem>
+  )
 }

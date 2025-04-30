@@ -1,5 +1,4 @@
-import type { RootState } from './store.ts'
-import { ThemeMode } from './app-reducer.ts'
+import type {ThemeMode} from './app-reducer'
+import type {RootState} from './store'
 
-// Возвращаем конкретное значение themeMode из среза состояния
-export const selectThemeMode = (state: RootState): ThemeMode => state.app.themeMode; // <-- ИСПРАВЛЕНО- ИСПРАВЛЕНО
+export const selectThemeMode = (state: RootState): ThemeMode => state.app.themeMode

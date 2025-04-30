@@ -1,41 +1,40 @@
-import {ChangeEvent, useState} from 'react';
-import {TextField} from '@mui/material';
+import TextField from '@mui/material/TextField'
+import {type ChangeEvent, useState} from 'react'
 
 type Props = {
-    value: string
-    onChange: (title: string) => void
-
+  value: string
+  onChange: (title: string) => void
 }
 
 export const EditableSpan = ({ value, onChange }: Props) => {
-    const [isEditMode, setIsEditMode] = useState(false)
-    const [title, setTitle] = useState(value)
+  const [title, setTitle] = useState(value)
+  const [isEditMode, setIsEditMode] = useState(false)
 
-    const turnOnEditMode = () => {
-        setIsEditMode(true)
-    }
-    const turnOffEditMode = () => {
-        setIsEditMode(false)
-        onChange(title)
-    }
-    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-    }
+  const turnOnEditMode = () => {
+    setIsEditMode(true)
+  }
 
-    return (
-        <>
-            {isEditMode ? (
-                <TextField variant={'outlined'}
-                           value={title}
-                           size={'small'}
-                           onChange={changeTitle}
-                           onBlur={turnOffEditMode}
-                           autoFocus/>
-                ) : (
-                <span onDoubleClick={turnOnEditMode}>{value}</span>
-            )}
-        </>
+  const turnOffEditMode = () => {
+    setIsEditMode(false)
+    onChange(title)
+  }
 
+  const changeTitle = (event: ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.currentTarget.value)
+  }
 
-    )
+  return (
+      <>
+        {isEditMode ? (
+            <TextField variant={'outlined'}
+                       value={title}
+                       size={'small'}
+                       onChange={changeTitle}
+                       onBlur={turnOffEditMode}
+                       autoFocus/>
+        ) : (
+            <span onDoubleClick={turnOnEditMode}>{value}</span>
+        )}
+      </>
+  )
 }
