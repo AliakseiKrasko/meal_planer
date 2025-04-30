@@ -1,8 +1,7 @@
 import {type ChangeEvent, type CSSProperties, useEffect, useState} from 'react'
 import Checkbox from '@mui/material/Checkbox'
 import axios from 'axios';
-import {BasePesponse} from '@/common/types/types.ts';
-import {CreateItemForm, EditableSpan} from '@/common/components';
+import {BaseResponse, CreateItemForm, EditableSpan} from '@/common/components';
 
 
 export type Todolist = {
@@ -30,7 +29,7 @@ export const AppHttpRequests = () => {
   }, [])
 
   const createTodolist = (title: string) => {
-    axios.post<BasePesponse<{ item: Todolist }>>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
+    axios.post<BaseResponse<{ item: Todolist }>>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
       headers: {
         Authorization: `Bearer ${token}`,
         'API-KEY': apiKey,
@@ -42,7 +41,7 @@ export const AppHttpRequests = () => {
   }
 
   const deleteTodolist = (id: string) => {
-    axios.delete<BasePesponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
+    axios.delete<BaseResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'API-KEY': apiKey,
@@ -56,7 +55,7 @@ export const AppHttpRequests = () => {
   }
 
   const changeTodolistTitle = (id: string, title: string) => {
-    axios.put<BasePesponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
+    axios.put<BaseResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
       headers: {
         Authorization: `Bearer ${token}`,
         'API-KEY': apiKey,
