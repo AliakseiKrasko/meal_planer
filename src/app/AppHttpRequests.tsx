@@ -2,6 +2,7 @@ import {type ChangeEvent, type CSSProperties, useEffect, useState} from 'react'
 import Checkbox from '@mui/material/Checkbox'
 import axios from 'axios';
 import {BaseResponse, CreateItemForm, EditableSpan} from '@/common/components';
+import {instance} from '@/common/instance/instance.ts';
 
 
 export type Todolist = {
@@ -16,15 +17,9 @@ export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Todolist[]>([])
   const [tasks, setTasks] = useState<any>({})
 
-  const token = 'aa939b1d-4e98-4ed0-86d2-e20763cf7640'
-  const apiKey = 'ca314bcf-3ffa-44f6-9353-483494de9fe9'
 
   useEffect(() => {
-    axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).then(res => setTodolists(res.data)
+    instance.get<Todolist[]>('/todo-lists').then(res => setTodolists(res.data)
     )
   }, [])
 
