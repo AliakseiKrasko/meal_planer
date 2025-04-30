@@ -3,6 +3,7 @@ import Checkbox from '@mui/material/Checkbox'
 import {BaseResponse, CreateItemForm, EditableSpan} from '@/common/components';
 import {instance} from '@/common/instance/instance.ts';
 import {Todolist} from '@/features/todolists/api/todolistsApi.types.ts';
+import {todolistsApi} from '@/features/todolists/api/todolistsApi.ts';
 
 
 
@@ -12,7 +13,7 @@ export const AppHttpRequests = () => {
 
 
   useEffect(() => {
-    instance.get<Todolist[]>('/todo-lists').then(res => setTodolists(res.data)
+    todolistsApi.getTodolists().then(res => setTodolists(res.data)
     )
   }, [])
 
@@ -33,10 +34,8 @@ export const AppHttpRequests = () => {
   }
 
   const changeTodolistTitle = (id: string, title: string) => {
-    instance.put<BaseResponse>(`/todo-lists/${id}`, {title}).then(res => {
-      if (res.data.resultCode === 0) {
-        setTodolists(todolists.map(t => t.id === id ? {...t, title} : t))
-      }
+    todolistsApi.changeTodolistTitle({id, title}).then(() => {
+      setTodolists(todolists.map(todolist => todolist.id === id ? {...todolist, title} : todolist))
     })
   }
 
