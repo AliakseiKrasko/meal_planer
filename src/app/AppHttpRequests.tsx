@@ -24,24 +24,14 @@ export const AppHttpRequests = () => {
   }, [])
 
   const createTodolist = (title: string) => {
-    axios.post<BaseResponse<{ item: Todolist }>>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'API-KEY': apiKey,
-      }
-    }).then(res => {
+    instance.post<BaseResponse<{ item: Todolist }>>('/todo-lists', {title}).then(res => {
       const newTodolist = res.data.data.item
       setTodolists([newTodolist, ...todolists])
     })
   }
 
   const deleteTodolist = (id: string) => {
-    axios.delete<BaseResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'API-KEY': apiKey,
-      },
-    }).then(res => {
+    instance.delete<BaseResponse>(`/todo-lists/${id}`).then(res => {
       if (res.data.resultCode === 0) {
         setTodolists(todolists.filter(t => t.id !== id))
       }
@@ -50,12 +40,7 @@ export const AppHttpRequests = () => {
   }
 
   const changeTodolistTitle = (id: string, title: string) => {
-    axios.put<BaseResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'API-KEY': apiKey,
-      },
-    }).then(res => {
+    instance.put<BaseResponse>(`/todo-lists/${id}`, {title}).then(res => {
       if (res.data.resultCode === 0) {
         setTodolists(todolists.map(t => t.id === id ? {...t, title} : t))
       }
