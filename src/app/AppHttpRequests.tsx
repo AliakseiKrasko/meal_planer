@@ -52,7 +52,16 @@ export const AppHttpRequests = () => {
     });
   };
 
-  const createTask = (todolistId: string, title: string) => {};
+  const createTask = (todolistId: string, title: string) => {
+    tasksApi.createTask(todolistId, title).then((res) => {
+      if (res.data.resultCode === 0) {
+        setTasks((prevTasks) => ({
+          ...prevTasks,
+          [todolistId]: [...(prevTasks[todolistId] || []), res.data.data.item],
+        }));
+      }
+    });
+  };
 
   const deleteTask = (todolistId: string, taskId: string) => {};
 
