@@ -2,6 +2,7 @@ import { instance } from "@/common/instance";
 import {
   DomainTask,
   GetTasksResponse,
+  UpdateTaskModel,
 } from "@/features/todolists/api/tasksApi.types.ts";
 import { BaseResponse } from "@/common/types/types.ts";
 
@@ -13,6 +14,12 @@ export const tasksApi = {
     return instance.post<BaseResponse<DomainTask>>(
       `/todo-lists/${todolistId}/tasks`,
       { title }
+    );
+  },
+  updateTask(todolistId: string, taskId: string, model: UpdateTaskModel) {
+    return instance.put<BaseResponse<DomainTask>>(
+      `/todo-lists/${todolistId}/tasks/${taskId}`,
+      model
     );
   },
 };

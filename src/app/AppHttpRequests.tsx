@@ -65,7 +65,26 @@ export const AppHttpRequests = () => {
 
   const deleteTask = (todolistId: string, taskId: string) => {};
 
-  const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>, task: any) => {};
+  const changeTaskStatus = (
+    e: ChangeEvent<HTMLInputElement>,
+    task: DomainTask
+  ) => {
+    const newStatus = e.currentTarget.checked ? 2 : 0;
+    const updatedTask = {
+      ...task,
+      status: newStatus,
+    };
+    tasksApi.updateTask(task.todoListId, task.id, updatedTask).then((res) => {
+      if (res.data.resultCode === 0) {
+        setTasks((prevTasks) => ({
+          ...prevTasks,
+          [task.todoListId]: prevTasks[task.todoListId].map((t) =>
+            t.id === task.id ? { ...t, status: newStatus } : t
+          ),
+        }));
+      }
+    });
+  };
 
   const changeTaskTitle = (task: any, title: string) => {};
 
@@ -84,10 +103,10 @@ export const AppHttpRequests = () => {
           <CreateItemForm
             onCreateItem={(title) => createTask(todolist.id, title)}
           />
-          {tasks[todolist.id]?.map((task: any) => (
+          {tasks[todolist.id]?.map((task: DomainTask) => (
             <div key={task.id}>
               <Checkbox
-                checked={task.isDone}
+                checked={task.status === 2}
                 onChange={(e) => changeTaskStatus(e, task)}
               />
               <EditableSpan
