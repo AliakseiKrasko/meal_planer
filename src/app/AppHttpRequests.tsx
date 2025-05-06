@@ -105,7 +105,29 @@ export const AppHttpRequests = () => {
     });
   };
 
-  const changeTaskTitle = (task: any, title: string) => {};
+  const changeTaskTitle = (task: DomainTask, title: string) => {
+    const todolistId = task.todoListId;
+
+    const model: UpdateTaskModel = {
+      description: task.description,
+      title: title, // новое значение
+      priority: task.priority,
+      startDate: task.startDate,
+      deadline: task.deadline,
+      status: task.status, // сохраняем текущее значение статуса
+    };
+
+    tasksApi.updateTask({ todolistId, taskId: task.id, model }).then((res) => {
+      if (res.data.resultCode === 0) {
+        setTasks((prevTasks) => ({
+          ...prevTasks,
+          [todolistId]: prevTasks[todolistId].map((t) =>
+            t.id === task.id ? { ...t, title } : t
+          ),
+        }));
+      }
+    });
+  };
 
   return (
     <div style={{ margin: "20px" }}>
