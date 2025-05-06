@@ -16,7 +16,15 @@ export const tasksApi = {
       { title }
     );
   },
-  updateTask(todolistId: string, taskId: string, model: UpdateTaskModel) {
+  updateTask({
+    todolistId,
+    taskId,
+    model,
+  }: {
+    todolistId: string;
+    taskId: string;
+    model: UpdateTaskModel;
+  }) {
     return instance.put<BaseResponse<DomainTask>>(
       `/todo-lists/${todolistId}/tasks/${taskId}`,
       model

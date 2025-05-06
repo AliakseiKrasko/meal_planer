@@ -9,7 +9,10 @@ import { CreateItemForm, EditableSpan } from "@/common/components";
 import { Todolist } from "@/features/todolists/api/todolistsApi.types.ts";
 import { todolistsApi } from "@/features/todolists/api/todolistsApi.ts";
 import { tasksApi } from "@/features/todolists/api/tasksApi.ts";
-import { DomainTask } from "@/features/todolists/api/tasksApi.types.ts";
+import {
+  DomainTask,
+  UpdateTaskModel,
+} from "@/features/todolists/api/tasksApi.types.ts";
 
 export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Todolist[]>([]);
@@ -69,20 +72,24 @@ export const AppHttpRequests = () => {
     e: ChangeEvent<HTMLInputElement>,
     task: DomainTask
   ) => {
-    const newStatus = e.currentTarget.checked ? 2 : 0;
-    const updatedTask = {
-      ...task,
-      status: newStatus,
+    const todolistId = task.todoListId;
+
+    const model: UpdateTaskModel = {
+      description: task.description,
+      title: task.title,
+      priority: task.priority,
+      startDate: task.startDate,
+      deadline: task.deadline,
+      status: e.target.checked ? 2 : 0,
     };
-    tasksApi.updateTask(task.todoListId, task.id, updatedTask).then((res) => {
-      if (res.data.resultCode === 0) {
-        setTasks((prevTasks) => ({
-          ...prevTasks,
-          [task.todoListId]: prevTasks[task.todoListId].map((t) =>
-            t.id === task.id ? { ...t, status: newStatus } : t
-          ),
-        }));
-      }
+
+    tasksApi.updateTask({ todolistId, taskId: task.id, model }).then(() => {
+      setTasks({
+        ...tasks,
+        [todolistId]: tasks[todolistId].map((t) =>
+          t.id === task.id ? { ...t, ...model } : t
+        ),
+      });
     });
   };
 
