@@ -13,6 +13,7 @@ import {
   DomainTask,
   UpdateTaskModel,
 } from "@/features/todolists/api/tasksApi.types.ts";
+import { TaskStatus } from "@/common/enums/enums.ts";
 
 export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Todolist[]>([]);
@@ -80,7 +81,7 @@ export const AppHttpRequests = () => {
       priority: task.priority,
       startDate: task.startDate,
       deadline: task.deadline,
-      status: e.target.checked ? 2 : 0,
+      status: e.target.checked ? TaskStatus.Completed : TaskStatus.New,
     };
 
     tasksApi.updateTask({ todolistId, taskId: task.id, model }).then(() => {
@@ -113,7 +114,7 @@ export const AppHttpRequests = () => {
           {tasks[todolist.id]?.map((task: DomainTask) => (
             <div key={task.id}>
               <Checkbox
-                checked={task.status === 2}
+                checked={task.status === TaskStatus.Completed}
                 onChange={(e) => changeTaskStatus(e, task)}
               />
               <EditableSpan
