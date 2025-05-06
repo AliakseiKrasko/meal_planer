@@ -30,4 +30,10 @@ export const tasksApi = {
       model
     );
   },
+
+  deleteTask(todolistId: string, taskId: string) {
+    return instance.delete<BaseResponse>(
+      `/todo-lists/${todolistId}/tasks/${taskId}`
+    );
+  },
 };

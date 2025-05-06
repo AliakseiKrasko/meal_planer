@@ -67,7 +67,18 @@ export const AppHttpRequests = () => {
     });
   };
 
-  const deleteTask = (todolistId: string, taskId: string) => {};
+  const deleteTask = (todolistId: string, taskId: string) => {
+    tasksApi.deleteTask(todolistId, taskId).then((res) => {
+      if (res.data.resultCode === 0) {
+        setTasks((prevTasks) => ({
+          ...prevTasks,
+          [todolistId]: prevTasks[todolistId].filter(
+            (task) => task.id !== taskId
+          ),
+        }));
+      }
+    });
+  };
 
   const changeTaskStatus = (
     e: ChangeEvent<HTMLInputElement>,
