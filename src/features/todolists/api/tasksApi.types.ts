@@ -1,6 +1,7 @@
 import { TaskPriority, TaskStatus } from "@/common/enums/enums.ts";
 
 export type DomainTask = {
+  item: DomainTask;
   description: string;
   title: string;
   status: TaskStatus;

@@ -25,7 +25,10 @@ export const AppHttpRequests = () => {
       setTodolists(todolists);
       todolists.forEach((todolist) => {
         tasksApi.getTasks(todolist.id).then((res) => {
-          setTasks({ ...tasks, [todolist.id]: res.data.items });
+          setTasks((prev) => ({
+            ...prev,
+            [todolist.id]: res.data.items,
+          }));
         });
       });
     });
